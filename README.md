@@ -1,48 +1,71 @@
-# Notus API Demo
+# Notus API Examples Monorepo
 
-A simple demonstration of the Notus API for Web3 account abstraction. This demo shows how to integrate and interact with smart contracts using Notus as a gateway, making Web3 development more accessible.
+This monorepo contains examples and resources for integrating with the Notus API - a gateway for Web3 account abstraction that makes blockchain development more accessible.
 
-## 🚀 Quick Start
+## 📦 Repository Structure
+
+- **packages/**: Shared libraries and components
+  - **ui/**: Reusable UI components built with React, Tailwind CSS, and Radix UI
+  - **typescript-config/**: Shared TypeScript configurations
+
+- **examples/**: Example projects showcasing Notus API integration
+  - **privy-nextjs-notus-api/**: A Next.js application demonstrating Notus API with Privy authentication
+
+## 🚀 Getting Started
 
 1. Install dependencies:
 ```bash
 bun install
 ```
 
-2. Set up environment variables:
-```bash
-# Server-side variables
-# Get your own API key at https://dashboard.notus.team
-NOTUS_API_KEY=ey<...>
-PRIVY_APP_SECRET=<your-privy-app-secret>
-
-# Client-side variables
-NEXT_PUBLIC_PRIVY_APP_ID=<your-privy-app-id>
-NEXT_PUBLIC_PRIVY_CLIENT_ID=<your-privy-client-id>
-```
-
-3. Run the development server:
+2. Run development server:
 ```bash
 bun dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) to see the demo in action.
+## 👩‍💻 Development
 
-## ✨ Features
+This project uses [Turborepo](https://turbo.build/) for monorepo management and [Bun](https://bun.sh/) as the package manager.
 
-- Account abstraction integration via Notus API
-- Simple smart contract interactions
+```bash
+# Build all packages and examples
+bun run build
+
+# Run type checking
+bun run check-types
+
+# Run linting
+bun run lint
+```
+
+## 🔍 Example Projects
+
+### Privy Next.js Notus API
+
+A demonstration of integrating Notus API for Web3 account abstraction with Privy authentication in a Next.js application. The example shows:
+
+- Account abstraction via Notus API
+- Smart contract interactions
 - Web3 wallet connection
 - Transaction management
 
-## 🛠️ Built With
+To run this example individually:
+```bash
+cd examples/privy-nextjs-notus-api
+bun dev
+```
+
+## 🛠️ Technology Stack
 
 - Next.js
+- React 19
 - TypeScript
-- Notus API
-- Web3 libraries
+- Tailwind CSS
+- Privy (for authentication)
+- Turborepo (for monorepo management)
+- Bun (for package management)
 
-## 📖 Learn More
+## 📚 Resources
 
 - [Notus API Documentation](https://docs.notus.com)
 - [Account Abstraction Explained](https://ethereum.org/en/developers/docs/smart-contracts/account-abstraction/)

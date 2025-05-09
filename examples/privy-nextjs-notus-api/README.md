@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Notus API Demo
 
-## Getting Started
+A simple demonstration of the Notus API for Web3 account abstraction. This demo shows how to integrate and interact with smart contracts using Notus as a gateway, making Web3 development more accessible.
 
-First, run the development server:
+## 🚀 Quick Start
 
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
+```
+
+2. Set up environment variables:
+```bash
+# Server-side variables
+# Get your own API key at https://dashboard.notus.team
+NOTUS_API_KEY=ey<...>
+PRIVY_APP_SECRET=<your-privy-app-secret>
+
+# Client-side variables
+NEXT_PUBLIC_PRIVY_APP_ID=<your-privy-app-id>
+NEXT_PUBLIC_PRIVY_CLIENT_ID=<your-privy-client-id>
+```
+
+3. Run the development server:
+```bash
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) to see the demo in action.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Account abstraction integration via Notus API
+- Simple smart contract interactions
+- Web3 wallet connection
+- Transaction management
 
-## Learn More
+## 🛠️ Built With
 
-To learn more about Next.js, take a look at the following resources:
+- Next.js
+- TypeScript
+- Notus API
+- Web3 libraries
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📖 Learn More
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Notus API Documentation](https://docs.notus.com)
+- [Account Abstraction Explained](https://ethereum.org/en/developers/docs/smart-contracts/account-abstraction/)
 
-## Deploy on Vercel
+## 📝 License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
