@@ -1,84 +1,52 @@
-# Turborepo starter
+# Notus API Demo
 
-This Turborepo starter is maintained by the Turborepo core team.
+A simple demonstration of the Notus API for Web3 account abstraction. This demo shows how to integrate and interact with smart contracts using Notus as a gateway, making Web3 development more accessible.
 
-## Using this example
+## 🚀 Quick Start
 
-Run the following command:
-
-```sh
-npx create-turbo@latest
+1. Install dependencies:
+```bash
+bun install
 ```
 
-## What's inside?
+2. Set up environment variables:
+```bash
+# Server-side variables
+# Get your own API key at https://dashboard.notus.team
+NOTUS_API_KEY=ey<...>
+PRIVY_APP_SECRET=<your-privy-app-secret>
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
+# Client-side variables
+NEXT_PUBLIC_PRIVY_APP_ID=<your-privy-app-id>
+NEXT_PUBLIC_PRIVY_CLIENT_ID=<your-privy-client-id>
 ```
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
+3. Run the development server:
+```bash
+bun dev
 ```
 
-### Remote Caching
+Visit [http://localhost:3000](http://localhost:3000) to see the demo in action.
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+## ✨ Features
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+- Account abstraction integration via Notus API
+- Simple smart contract interactions
+- Web3 wallet connection
+- Transaction management
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+## 🛠️ Built With
 
-```
-cd my-turborepo
-npx turbo login
-```
+- Next.js
+- TypeScript
+- Notus API
+- Web3 libraries
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## 📖 Learn More
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+- [Notus API Documentation](https://docs.notus.com)
+- [Account Abstraction Explained](https://ethereum.org/en/developers/docs/smart-contracts/account-abstraction/)
 
-```
-npx turbo link
-```
+## 📝 License
 
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+MIT
