@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/styles/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "@notus-api-examples/ui/components",
+    "utils": "@notus-api-examples/ui/lib/utils",
+    "hooks": "@notus-api-examples/ui/hooks",
+    "lib": "@notus-api-examples/ui/lib",
+    "ui": "@notus-api-examples/ui/components"
+  }
+}
