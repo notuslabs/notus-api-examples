@@ -1,5 +1,6 @@
-import z from "zod";
+import { z } from "zod/v4";
 
+// Schema for form input (what the form receives)
 export const createStandardIndividualSessionSchema = z.object({
 	firstName: z.string().min(1),
 	lastName: z.string().min(1),

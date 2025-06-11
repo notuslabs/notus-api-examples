@@ -14,10 +14,10 @@ import {
 	SelectValue,
 } from "@notus-api-examples/ui/components/select";
 import type { UseFormReturn } from "react-hook-form";
-import type { CreateStandardIndividualSessionSchema } from "@/actions/schemas";
+import type { CreateStandardIndividualSessionFormSchema } from "@/components/kyc-form";
 
 interface KYCFormFieldsProps {
-	form: UseFormReturn<CreateStandardIndividualSessionSchema>;
+	form: UseFormReturn<CreateStandardIndividualSessionFormSchema>;
 }
 
 export function KYCFormFields({ form }: KYCFormFieldsProps) {
@@ -130,6 +130,52 @@ export function KYCFormFields({ form }: KYCFormFieldsProps) {
 									<SelectItem value="BRAZIL">Brazil</SelectItem>
 								</SelectContent>
 							</Select>
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
+
+			<FormField
+				control={form.control}
+				name="frontDocumentImage"
+				render={({ field: { value, onChange, ...fieldProps } }) => (
+					<FormItem>
+						<FormLabel>Front Document Image</FormLabel>
+						<FormControl>
+							<Input
+								type="file"
+								accept="image/*"
+								disabled={form.formState.isSubmitting}
+								onChange={(e) => {
+									const file = e.target.files?.[0];
+									onChange(file);
+								}}
+								{...fieldProps}
+							/>
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
+
+			<FormField
+				control={form.control}
+				name="backDocumentImage"
+				render={({ field: { value, onChange, ...fieldProps } }) => (
+					<FormItem>
+						<FormLabel>Back Document Image</FormLabel>
+						<FormControl>
+							<Input
+								type="file"
+								accept="image/*"
+								disabled={form.formState.isSubmitting}
+								onChange={(e) => {
+									const file = e.target.files?.[0];
+									onChange(file);
+								}}
+								{...fieldProps}
+							/>
 						</FormControl>
 						<FormMessage />
 					</FormItem>

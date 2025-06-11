@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@notus-api-examples/ui/globals.css";
 import { ThemeProvider } from "@notus-api-examples/ui/components/theme-provider";
+import { Toaster } from "@notus-api-examples/ui/components/sonner";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({
 					disableTransitionOnChange
 				>
 					{children}
+					<Toaster />
 				</ThemeProvider>
 			</body>
 		</html>
