@@ -13,3 +13,24 @@ export const createStandardIndividualSessionSchema = z.object({
 export type CreateStandardIndividualSessionSchema = z.infer<
 	typeof createStandardIndividualSessionSchema
 >;
+
+// Schema for fiat deposit quote request
+export const fiatDepositQuoteSchema = z.object({
+	fiatCurrency: z.enum(["BRL"]),
+	amountInFiatCurrency: z.number().positive().min(1),
+	cryptoCurrency: z.enum(["USDC", "BRZ"]),
+});
+
+export type FiatDepositQuoteSchema = z.infer<typeof fiatDepositQuoteSchema>;
+
+// Schema for fiat deposit request
+export const fiatDepositSchema = z.object({
+	quoteId: z.string().min(1),
+	walletAddress: z
+		.string()
+		.regex(/^0x[a-fA-F0-9]{40}$/, "Invalid wallet address"),
+	chainId: z.number(),
+	taxId: z.string({ error: "Tax ID is required" }).min(1, "Tax ID is required"),
+});
+
+export type FiatDepositSchema = z.infer<typeof fiatDepositSchema>;
