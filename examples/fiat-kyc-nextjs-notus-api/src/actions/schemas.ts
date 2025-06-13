@@ -34,3 +34,57 @@ export const fiatDepositSchema = z.object({
 });
 
 export type FiatDepositSchema = z.infer<typeof fiatDepositSchema>;
+
+// Schema for fiat withdraw quote request
+export const fiatWithdrawQuoteSchema = z.object({
+	chainId: z.number(),
+	fiatCurrencyOut: z.enum(["BRL"]),
+	amountInCryptoCurrency: z.string().min(1, "Amount is required"),
+	cryptoCurrencyIn: z.enum(["BRZ", "USDC"]),
+});
+
+export type FiatWithdrawQuoteSchema = z.infer<typeof fiatWithdrawQuoteSchema>;
+
+// Schema for fiat withdraw request
+export const fiatWithdrawSchema = z.object({
+	quoteId: z.string().min(1),
+	taxId: z.string().min(1, "Tax ID is required"),
+	pixKey: z.string().min(1, "PIX key is required"),
+	walletAddress: z
+		.string()
+		.regex(/^0x[a-fA-F0-9]{40}$/, "Invalid wallet address"),
+	chainId: z.number(),
+});
+
+export type FiatWithdrawSchema = z.infer<typeof fiatWithdrawSchema>;
+
+// Schema for execute user operation request
+export const executeUserOpSchema = z.object({
+	quoteId: z.string().min(1),
+	signature: z.string().min(1, "Signature is required"),
+});
+
+export type ExecuteUserOpSchema = z.infer<typeof executeUserOpSchema>;
+
+// Schema for register smart wallet request
+export const registerSmartWalletSchema = z.object({
+	externallyOwnedAccount: z
+		.string()
+		.min(1, "Externally owned account is required"),
+	factory: z.string().min(1, "Factory is required"),
+	salt: z.string().min(1, "Salt is required"),
+});
+
+export type RegisterSmartWalletSchema = z.infer<
+	typeof registerSmartWalletSchema
+>;
+
+// Schema for get smart wallet address request
+export const getSmartWalletSchema = z.object({
+	externallyOwnedAccount: z
+		.string()
+		.min(1, "Externally owned account is required"),
+	factory: z.string().min(1, "Factory is required"),
+});
+
+export type GetSmartWalletSchema = z.infer<typeof getSmartWalletSchema>;
