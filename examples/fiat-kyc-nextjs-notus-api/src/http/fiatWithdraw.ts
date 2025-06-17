@@ -4,14 +4,11 @@ export type FiatWithdrawResponse = {
 	withdrawOrder: {
 		userOpHash: `0x${string}`;
 		orderId: string;
-		sentCryptoCurrencyAmount: string;
-		receivedFiatCurrencyAmount: string;
-		transactionFeeAmount: string;
-		estimatedGasFeeAmount: string;
+		amountToSendInCryptoCurrency: string;
+		amountToReceiveInFiatCurrency: string;
+		transactionFeeAmountInCryptoCurrency: string;
+		estimatedGasFeeAmountInCryptoCurrency: string;
 		expiresAt: string;
-		monthlyLimit: number;
-		monthlyUsed: number;
-		monthlyRemaining: number;
 	};
 };
 
