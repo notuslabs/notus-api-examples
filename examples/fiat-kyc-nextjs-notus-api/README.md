@@ -150,7 +150,7 @@ const signature = await signMessage({
 
 ## 🌍 Supported Features
 
-- **Currencies**: BRL (Brazilian Real), USDC, BRZ
+- **Currencies**: BRL (Brazilian Real), BRZ (more coming soon™)
 - **Countries**: Brazil, United States  
 - **Documents**: Identity Card, Passport, Driver's License
 - **Blockchains**: Ethereum Mainnet, Sepolia Testnet
