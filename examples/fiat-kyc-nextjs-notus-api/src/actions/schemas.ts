@@ -16,9 +16,9 @@ export type CreateStandardIndividualSessionSchema = z.infer<
 
 // Schema for fiat deposit quote request
 export const fiatDepositQuoteSchema = z.object({
-	fiatCurrency: z.enum(["BRL"]),
-	amountInFiatCurrency: z.number().positive().min(1),
-	cryptoCurrency: z.enum(["USDC", "BRZ"]),
+	paymentMethodToSend: z.enum(["PIX"]),
+	amountToSendInFiatCurrency: z.number().positive().min(0.01),
+	cryptoCurrencyToReceive: z.enum(["USDC", "BRZ"]),
 });
 
 export type FiatDepositQuoteSchema = z.infer<typeof fiatDepositQuoteSchema>;
@@ -38,9 +38,9 @@ export type FiatDepositSchema = z.infer<typeof fiatDepositSchema>;
 // Schema for fiat withdraw quote request
 export const fiatWithdrawQuoteSchema = z.object({
 	chainId: z.number(),
-	fiatCurrencyOut: z.enum(["BRL"]),
-	amountInCryptoCurrency: z.string().min(1, "Amount is required"),
-	cryptoCurrencyIn: z.enum(["BRZ", "USDC"]),
+	paymentMethodToReceive: z.enum(["PIX", "BANK_TRANSFER", "WIRE_TRANSFER"]),
+	amountToSendInCryptoCurrency: z.string().min(1, "Amount is required"),
+	cryptoCurrencyToSend: z.enum(["USDC"]),
 });
 
 export type FiatWithdrawQuoteSchema = z.infer<typeof fiatWithdrawQuoteSchema>;
@@ -49,7 +49,12 @@ export type FiatWithdrawQuoteSchema = z.infer<typeof fiatWithdrawQuoteSchema>;
 export const fiatWithdrawSchema = z.object({
 	quoteId: z.string().min(1),
 	taxId: z.string().min(1, "Tax ID is required"),
-	pixKey: z.string().min(1, "PIX key is required"),
+	paymentMethodToReceiveDetails: z.discriminatedUnion("type", [
+		z.object({
+			type: z.literal("PIX"),
+			pixKey: z.string().min(1, "PIX key is required"),
+		}),
+	]),
 	walletAddress: z
 		.string()
 		.regex(/^0x[a-fA-F0-9]{40}$/, "Invalid wallet address"),

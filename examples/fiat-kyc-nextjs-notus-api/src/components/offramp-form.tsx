@@ -6,11 +6,7 @@ import {
 	useForm,
 	zodResolver,
 } from "@notus-api-examples/ui/components/hook-form";
-import {
-	fiatWithdrawQuoteSchema,
-	fiatWithdrawSchema,
-	executeUserOpSchema,
-} from "@/actions/schemas";
+import { fiatWithdrawQuoteSchema, fiatWithdrawSchema } from "@/actions/schemas";
 import { useCallback, useState } from "react";
 import { fiatWithdrawQuoteAction } from "@/actions/fiatWithdrawQuote";
 import { fiatWithdrawAction } from "@/actions/fiatWithdraw";
@@ -30,7 +26,6 @@ import {
 import type { z } from "zod/v4";
 import { toast } from "sonner";
 import type { FiatWithdrawQuoteResponse } from "@/http/fiatWithdrawQuote";
-import type { FiatWithdrawResponse } from "@/http/fiatWithdraw";
 import type { ExecuteUserOpResponse } from "@/http/executeUserOp";
 import { WithdrawQuoteFormFields } from "./withdraw-quote-form-fields";
 import { CompleteWithdraw } from "./complete-withdraw";
@@ -51,15 +46,15 @@ export function OffRampForm() {
 	const [quote, setQuote] = useState<FiatWithdrawQuoteResponse | null>(null);
 	const [result, setResult] = useState<ExecuteUserOpResponse | null>(null);
 	const { address } = useAccount();
-	const { signMessageAsync, isPending: isSigning } = useSignMessage();
+	const { signMessageAsync } = useSignMessage();
 
 	const quoteForm = useForm({
 		resolver: zodResolver(quoteFormSchema),
 		defaultValues: {
 			chainId: 137,
-			fiatCurrencyOut: "BRL" as const,
-			amountInCryptoCurrency: "10",
-			cryptoCurrencyIn: "BRZ" as const,
+			paymentMethodToReceive: "PIX" as const,
+			amountToSendInCryptoCurrency: "10",
+			cryptoCurrencyToSend: "USDC" as const,
 		},
 	});
 
@@ -68,7 +63,10 @@ export function OffRampForm() {
 		defaultValues: {
 			chainId: 137,
 			taxId: "",
-			pixKey: "",
+			paymentMethodToReceiveDetails: {
+				type: "PIX" as const,
+				pixKey: "",
+			},
 		},
 	});
 
@@ -182,6 +180,7 @@ export function OffRampForm() {
 				form={withdrawForm}
 				onSubmit={onWithdrawSubmit}
 				onBack={() => {
+					resetForm();
 					setStep("quote");
 				}}
 			/>

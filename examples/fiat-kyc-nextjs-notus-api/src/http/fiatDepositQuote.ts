@@ -3,8 +3,8 @@ import type { FiatDepositQuoteSchema } from "@/actions/schemas";
 export type FiatDepositQuoteResponse = {
 	depositQuote: {
 		quoteId: string;
-		amountToSend: string;
-		amountToReceive: string;
+		amountToSendInFiatCurrency: string;
+		amountToReceiveInCryptoCurrency: string;
 		expiresAt: string;
 	};
 };

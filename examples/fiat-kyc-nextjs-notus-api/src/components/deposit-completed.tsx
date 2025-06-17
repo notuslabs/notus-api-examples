@@ -34,7 +34,7 @@ export function DepositCompleted({
 			<CardContent className="space-y-4">
 				<div className="flex justify-center">
 					<img
-						src={`data:image/png;base64,${order.depositOrder.base64QrCode}`}
+						src={`data:image/png;base64,${order.depositOrder.paymentMethodToSendDetails.base64QrCode}`}
 						alt="QR Code for deposit"
 						className="w-48 h-48"
 					/>

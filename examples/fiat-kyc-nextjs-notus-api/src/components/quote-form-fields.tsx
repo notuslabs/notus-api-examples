@@ -32,7 +32,7 @@ export function QuoteFormFields({ form }: QuoteFormFieldsProps) {
 			<div className="flex gap-2">
 				<FormField
 					control={form.control}
-					name="amountInFiatCurrency"
+					name="amountToSendInFiatCurrency"
 					render={({ field }) => (
 						<FormItem className="w-full">
 							<FormControl>
@@ -50,17 +50,17 @@ export function QuoteFormFields({ form }: QuoteFormFieldsProps) {
 
 				<FormField
 					control={form.control}
-					name="fiatCurrency"
+					name="paymentMethodToSend"
 					render={({ field }) => (
 						<FormItem className="self-end">
 							<Select onValueChange={field.onChange} defaultValue={field.value}>
 								<FormControl>
 									<SelectTrigger>
-										<SelectValue placeholder="Select currency" />
+										<SelectValue placeholder="Select payment method" />
 									</SelectTrigger>
 								</FormControl>
 								<SelectContent>
-									<SelectItem value="BRL">R$ - BRL</SelectItem>
+									<SelectItem value="PIX">PIX</SelectItem>
 								</SelectContent>
 							</Select>
 							<FormMessage />
@@ -75,7 +75,7 @@ export function QuoteFormFields({ form }: QuoteFormFieldsProps) {
 
 			<FormField
 				control={form.control}
-				name="cryptoCurrency"
+				name="cryptoCurrencyToReceive"
 				render={({ field }) => (
 					<FormItem className="w-full">
 						<Select onValueChange={field.onChange} defaultValue={field.value}>

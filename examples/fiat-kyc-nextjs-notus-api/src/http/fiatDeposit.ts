@@ -2,8 +2,13 @@ import type { FiatDepositSchema } from "@/actions/schemas";
 
 export type FiatDepositResponse = {
 	depositOrder: {
-		base64QrCode: string;
 		expiresAt: string;
+		orderId: string;
+		paymentMethodToSendDetails: {
+			type: "PIX";
+			base64QrCode: string;
+			pixKey: string;
+		};
 	};
 };
 

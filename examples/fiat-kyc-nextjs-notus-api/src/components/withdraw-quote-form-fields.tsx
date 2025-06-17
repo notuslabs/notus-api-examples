@@ -34,7 +34,7 @@ export function WithdrawQuoteFormFields({
 				<div className="flex gap-2">
 					<FormField
 						control={form.control}
-						name="amountInCryptoCurrency"
+						name="amountToSendInCryptoCurrency"
 						render={({ field }) => (
 							<FormItem className="w-full">
 								<FormControl>
@@ -54,7 +54,7 @@ export function WithdrawQuoteFormFields({
 
 					<FormField
 						control={form.control}
-						name="cryptoCurrencyIn"
+						name="cryptoCurrencyToSend"
 						render={({ field }) => (
 							<FormItem className="self-end">
 								<Select
@@ -67,7 +67,6 @@ export function WithdrawQuoteFormFields({
 										</SelectTrigger>
 									</FormControl>
 									<SelectContent>
-										<SelectItem value="BRZ">BRZ</SelectItem>
 										<SelectItem value="USDC">USDC</SelectItem>
 									</SelectContent>
 								</Select>
@@ -83,11 +82,13 @@ export function WithdrawQuoteFormFields({
 			</div>
 
 			<div className="flex flex-col gap-2">
-				<span className="text-sm text-muted-foreground">You'll receive</span>
+				<span className="text-sm text-muted-foreground">
+					Receive payment via
+				</span>
 				<div className="flex gap-2">
 					<FormField
 						control={form.control}
-						name="fiatCurrencyOut"
+						name="paymentMethodToReceive"
 						render={({ field }) => (
 							<FormItem className="w-full">
 								<Select
@@ -96,13 +97,11 @@ export function WithdrawQuoteFormFields({
 								>
 									<FormControl>
 										<SelectTrigger className="w-full">
-											<SelectValue placeholder="Select fiat currency" />
+											<SelectValue placeholder="Select payment method" />
 										</SelectTrigger>
 									</FormControl>
 									<SelectContent>
-										<SelectItem value="BRL">
-											R$ - BRL (Brazilian Real)
-										</SelectItem>
+										<SelectItem value="PIX">PIX</SelectItem>
 									</SelectContent>
 								</Select>
 								<FormMessage />

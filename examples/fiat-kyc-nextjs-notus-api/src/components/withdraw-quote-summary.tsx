@@ -35,22 +35,22 @@ export function WithdrawQuoteSummary({ quote }: WithdrawQuoteSummaryProps) {
 				<div className="flex justify-between">
 					<span>Amount to Withdraw:</span>
 					<span>
-						{quote.withdrawQuote.amountInCryptoCurrency}{" "}
-						{quote.withdrawQuote.cryptoCurrencyIn}
+						{quote.withdrawQuote.amountToSendInCryptoCurrency}{" "}
+						{quote.withdrawQuote.cryptoCurrencyToSend}
 					</span>
 				</div>
 				<div className="flex justify-between">
 					<span>Amount After Fees:</span>
 					<span>
-						{quote.withdrawQuote.amountInCryptoCurrencyWithoutFees}{" "}
-						{quote.withdrawQuote.cryptoCurrencyIn}
+						{quote.withdrawQuote.amountToSendInCryptoCurrency}{" "}
+						{quote.withdrawQuote.cryptoCurrencyToSend}
 					</span>
 				</div>
 				<div className="flex justify-between">
 					<span>Estimated Gas Fee:</span>
 					<span>
 						{quote.withdrawQuote.estimatedGasFeeInCryptoCurrency}{" "}
-						{quote.withdrawQuote.cryptoCurrencyIn}
+						{quote.withdrawQuote.cryptoCurrencyToSend}
 					</span>
 				</div>
 				{smartWallet?.wallet && (
@@ -62,8 +62,8 @@ export function WithdrawQuoteSummary({ quote }: WithdrawQuoteSummaryProps) {
 				<div className="flex justify-between font-semibold">
 					<span>You'll Receive:</span>
 					<span>
-						{quote.withdrawQuote.amountOutInFiatCurrency}{" "}
-						{quote.withdrawQuote.fiatCurrencyOut}
+						{quote.withdrawQuote.amountToReceiveInFiatCurrency}{" "}
+						{quote.withdrawQuote.fiatCurrencyToReceive}
 					</span>
 				</div>
 				<div className="flex justify-between text-xs text-gray-500">

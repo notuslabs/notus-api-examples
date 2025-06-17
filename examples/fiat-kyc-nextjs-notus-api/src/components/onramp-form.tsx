@@ -6,7 +6,11 @@ import {
 	useForm,
 	zodResolver,
 } from "@notus-api-examples/ui/components/hook-form";
-import { fiatDepositQuoteSchema, fiatDepositSchema } from "@/actions/schemas";
+import {
+	fiatDepositQuoteSchema,
+	fiatDepositSchema,
+	type FiatDepositQuoteSchema,
+} from "@/actions/schemas";
 import { useCallback, useState } from "react";
 import { fiatDepositQuoteAction } from "@/actions/fiatDepositQuote";
 import { fiatDepositAction } from "@/actions/fiatDeposit";
@@ -41,12 +45,12 @@ export function OnRampForm() {
 	const [quote, setQuote] = useState<FiatDepositQuoteResponse | null>(null);
 	const [order, setOrder] = useState<FiatDepositResponse | null>(null);
 
-	const quoteForm = useForm({
-		resolver: zodResolver(quoteFormSchema),
+	const quoteForm = useForm<FiatDepositQuoteSchema>({
+		resolver: zodResolver(fiatDepositQuoteSchema),
 		defaultValues: {
-			fiatCurrency: "BRL" as const,
-			amountInFiatCurrency: 10,
-			cryptoCurrency: "BRZ" as const,
+			paymentMethodToSend: "PIX" as const,
+			amountToSendInFiatCurrency: 10,
+			cryptoCurrencyToReceive: "BRZ" as const,
 		},
 	});
 

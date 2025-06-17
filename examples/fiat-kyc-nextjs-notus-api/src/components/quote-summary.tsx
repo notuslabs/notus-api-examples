@@ -11,11 +11,11 @@ export function QuoteSummary({ quote }: QuoteSummaryProps) {
 			<div className="space-y-1 text-sm">
 				<div className="flex justify-between">
 					<span>Amount to Send:</span>
-					<span>{quote.depositQuote.amountToSend}</span>
+					<span>{quote.depositQuote.amountToSendInFiatCurrency}</span>
 				</div>
 				<div className="flex justify-between">
 					<span>Amount to Receive:</span>
-					<span>{quote.depositQuote.amountToReceive}</span>
+					<span>{quote.depositQuote.amountToReceiveInCryptoCurrency}</span>
 				</div>
 				<div className="flex justify-between text-xs text-gray-500">
 					<span>Expires:</span>

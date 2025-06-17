@@ -19,8 +19,6 @@ import type { FiatWithdrawQuoteResponse } from "@/http/fiatWithdrawQuote";
 import { WithdrawQuoteSummary } from "./withdraw-quote-summary";
 import { WithdrawFormFields } from "./withdraw-form-fields";
 import { ConnectWalletButton } from "./connect-wallet-button";
-import { useAccount } from "wagmi";
-import { getSmartWalletAction } from "@/actions/getSmartWallet";
 
 const withdrawFormSchema = fiatWithdrawSchema.omit({
 	quoteId: true,

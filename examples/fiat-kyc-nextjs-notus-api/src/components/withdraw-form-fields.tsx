@@ -29,7 +29,7 @@ interface WithdrawFormFieldsProps {
 
 export function WithdrawFormFields({ form }: WithdrawFormFieldsProps) {
 	return (
-		<>
+		<div className="grid grid-cols-2 gap-4">
 			<FormField
 				control={form.control}
 				name="chainId"
@@ -75,11 +75,15 @@ export function WithdrawFormFields({ form }: WithdrawFormFieldsProps) {
 				)}
 			/>
 
+			<span className="text-lg font-semibold col-span-2">
+				Payment method details
+			</span>
+
 			<FormField
 				control={form.control}
-				name="pixKey"
+				name="paymentMethodToReceiveDetails.pixKey"
 				render={({ field }) => (
-					<FormItem>
+					<FormItem className="col-span-2">
 						<FormLabel>PIX Key</FormLabel>
 						<FormControl>
 							<Input
@@ -91,6 +95,6 @@ export function WithdrawFormFields({ form }: WithdrawFormFieldsProps) {
 					</FormItem>
 				)}
 			/>
-		</>
+		</div>
 	);
 }

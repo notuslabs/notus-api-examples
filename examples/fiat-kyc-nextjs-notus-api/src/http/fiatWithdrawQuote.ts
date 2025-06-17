@@ -3,14 +3,13 @@ import type { FiatWithdrawQuoteSchema } from "@/actions/schemas";
 export type FiatWithdrawQuoteResponse = {
 	withdrawQuote: {
 		quoteId: string;
-		cryptoCurrencyIn: string;
-		fiatCurrencyOut: string;
-		amountInCryptoCurrency: string;
-		amountInCryptoCurrencyWithoutFees: string;
-		estimatedGasFeeInCryptoCurrency: string;
+		cryptoCurrencyToSend: string;
+		fiatCurrencyToReceive: string;
+		amountToSendInCryptoCurrency: string;
+		amountToReceiveInFiatCurrency: string;
 		transactionFeeInCryptoCurrency: string;
+		estimatedGasFeeInCryptoCurrency: string;
 		expiresAt: string;
-		amountOutInFiatCurrency: string;
 	};
 };
 
@@ -31,6 +30,7 @@ export async function fiatWithdrawQuote(
 
 	if (!response.ok) {
 		const error = await response.json();
+		console.log("error", JSON.stringify(error, null, 2));
 		throw new Error(error.message);
 	}
 
