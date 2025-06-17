@@ -31,300 +31,6 @@ bun dev
 
 Visit [http://localhost:3000](http://localhost:3000) to see the demo in action.
 
-## 🔧 Technical Implementation
-
-### API Configuration
-
-All Notus API calls follow a consistent pattern with proper error handling:
-
-```typescript
-export async function createKYCSession(data: KYCSessionData) {
-  const response = await fetch(
-    "https://api.notus.team/api/v1/kyc/individual-verification-sessions/standard",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": process.env.NOTUS_API_KEY,
-      },
-      body: JSON.stringify({
-        ...data,
-        livenessRequired: false,
-      }),
-    },
-  );
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
-  }
-
-  return response.json();
-}
-```
-
-## 🔄 Integration Guide
-
-### Step 1: KYC Verification Implementation
-
-#### 1.1 Create KYC Session
-
-```typescript
-const kycData = {
-  firstName: "John",
-  lastName: "Doe", 
-  birthDate: "1990-01-01",
-  documentId: "123456789",
-  documentCategory: "IDENTITY_CARD",
-  documentCountry: "US"
-};
-
-const session = await createKYCSession(kycData);
-
-// Response includes:
-// - session.id: Session identifier
-// - frontDocumentUpload: Pre-signed URL for front document
-// - backDocumentUpload: Pre-signed URL for back document (if needed)
-```
-
-#### 1.2 Document Upload Process
-
-The API returns pre-signed S3 URLs for secure document uploads:
-
-```typescript
-interface DocumentUpload {
-  url: string;
-  fields: {
-    bucket: string;
-    "X-Amz-Algorithm": string;
-    "X-Amz-Credential": string;
-    "X-Amz-Date": string;
-    key: string;
-    Policy: string;
-    "X-Amz-Signature": string;
-  };
-}
-
-// Upload documents using the pre-signed URLs
-async function uploadDocument(file: File, uploadData: DocumentUpload) {
-  const formData = new FormData();
-  
-  // Add all required fields
-  Object.entries(uploadData.fields).forEach(([key, value]) => {
-    formData.append(key, value);
-  });
-  
-  // Add the file last
-  formData.append("file", file);
-  
-  return fetch(uploadData.url, {
-    method: "POST",
-    body: formData,
-  });
-}
-```
-
-#### 1.3 Check Verification Status
-
-```typescript
-async function checkKYCStatus(sessionId: string) {
-  const response = await fetch(
-    `https://api.notus.team/api/v1/kyc/individual-verification-sessions/${sessionId}/result`,
-    {
-      headers: {
-        "x-api-key": process.env.NOTUS_API_KEY,
-      },
-    }
-  );
-  
-  const result = await response.json();
-  
-  // Status can be: VERIFYING, COMPLETED, FAILED
-  return result.session.status;
-}
-```
-
-### Step 2: Smart Wallet Integration
-
-#### 2.1 Get Smart Wallet Address
-
-```typescript
-async function getSmartWallet(externallyOwnedAccount: string, factory: string) {
-  const response = await fetch(
-    `https://api.notus.team/api/v1/wallets/address?externallyOwnedAccount=${externallyOwnedAccount}&factory=${factory}`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": process.env.NOTUS_API_KEY,
-      },
-    },
-  );
-
-  const data = await response.json();
-  
-  return {
-    smartWalletAddress: data.wallet.accountAbstraction,
-    externallyOwnedAccount: data.wallet.externallyOwnedAccount
-  };
-}
-```
-
-#### 2.2 Register Smart Wallet
-
-```typescript
-async function registerSmartWallet(walletData: {
-  externallyOwnedAccount: string;
-  factory: string;
-  salt: string;
-}) {
-  const response = await fetch("https://api.notus.team/api/v1/wallets", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": process.env.NOTUS_API_KEY,
-    },
-    body: JSON.stringify(walletData),
-  });
-
-  return response.json();
-}
-```
-
-### Step 3: Fiat Operations
-
-#### 3.1 Fiat Onramp (Deposit)
-
-**Get Quote:**
-```typescript
-async function getFiatDepositQuote(quoteData: {
-  fiatCurrency: "BRL";
-  amountInFiatCurrency: number;
-  cryptoCurrency: "USDC" | "BRZ";
-}) {
-  const response = await fetch("https://api.notus.team/api/v1/fiat/deposit/quote", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": process.env.NOTUS_API_KEY,
-    },
-    body: JSON.stringify(quoteData),
-  });
-
-  const quote = await response.json();
-  
-  // Returns: quoteId, exchangeRate, networkFee, estimatedArrival
-  return quote;
-}
-```
-
-**Execute Deposit:**
-```typescript
-async function executeFiatDeposit(depositData: {
-  quoteId: string;
-  walletAddress: string;
-  chainId: number;
-  taxId: string;
-}) {
-  const response = await fetch("https://api.notus.team/api/v1/fiat/deposit", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": process.env.NOTUS_API_KEY,
-    },
-    body: JSON.stringify(depositData),
-  });
-
-  const result = await response.json();
-  
-  // Returns PIX QR code for payment
-  return {
-    qrCode: result.depositOrder.base64QrCode,
-    expiresAt: result.depositOrder.expiresAt
-  };
-}
-```
-
-#### 3.2 Fiat Offramp (Withdrawal)
-
-**Get Quote:**
-```typescript
-async function getFiatWithdrawQuote(quoteData: {
-  chainId: number;
-  fiatCurrencyOut: "BRL";
-  amountInCryptoCurrency: string;
-  cryptoCurrencyIn: "BRZ" | "USDC";
-}) {
-  const response = await fetch("https://api.notus.team/api/v1/fiat/withdraw/quote", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": process.env.NOTUS_API_KEY,
-    },
-    body: JSON.stringify(quoteData),
-  });
-
-  return response.json();
-}
-```
-
-**Execute Withdrawal:**
-```typescript
-async function executeFiatWithdraw(withdrawData: {
-  quoteId: string;
-  taxId: string; // Brazilian CPF
-  pixKey: string; // PIX key for receiving funds
-  walletAddress: string;
-  chainId: number;
-}) {
-  const response = await fetch("https://api.notus.team/api/v1/fiat/withdraw", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": process.env.NOTUS_API_KEY,
-    },
-    body: JSON.stringify(withdrawData),
-  });
-
-  return response.json();
-}
-```
-
-### Step 4: User Operation Execution
-
-For smart wallet transactions, execute user operations:
-
-```typescript
-async function executeUserOperation(operationData: {
-  quoteId: string;
-  signature: string; // User's signature for the transaction
-}) {
-  const response = await fetch("https://api.notus.team/api/v1/user-operations/execute", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": process.env.NOTUS_API_KEY,
-    },
-    body: JSON.stringify(operationData),
-  });
-
-  return response.json();
-}
-```
-
-## 📡 API Endpoints
-
-| Endpoint | Method | Purpose |
-|----------|--------|---------|
-| `/api/v1/kyc/individual-verification-sessions/standard` | POST | Create KYC session |
-| `/api/v1/kyc/individual-verification-sessions/{id}/result` | GET | Get KYC result |
-| `/api/v1/wallets/address` | GET | Get smart wallet address |
-| `/api/v1/wallets` | POST | Register smart wallet |
-| `/api/v1/fiat/deposit/quote` | POST | Get deposit quote |
-| `/api/v1/fiat/deposit` | POST | Execute deposit |
-| `/api/v1/fiat/withdraw/quote` | POST | Get withdrawal quote |
-| `/api/v1/fiat/withdraw` | POST | Execute withdrawal |
-| `/api/v1/user-operations/execute` | POST | Execute user operation |
-
 ## 🔐 Authentication
 
 All API calls require the `x-api-key` header:
@@ -335,6 +41,112 @@ headers: {
   "x-api-key": process.env.NOTUS_API_KEY,
 }
 ```
+
+## 🔄 Flows
+
+### KYC Flow
+
+The KYC (Know Your Customer) verification process involves several steps to verify user identity:
+
+1. **Create a standard KYC session** with the Notus API:
+   - Submit user personal information (name, birth date, etc.)
+   - Specify document type and country
+   - Receive upload URLs for document images
+
+2. **Upload the user's documents** using the provided presigned URLs:
+```typescript
+export async function uploadFile({
+	file,
+	url,
+	fields,
+}: {
+	file: File;
+	url: string;
+	fields: Record<string, string>;
+}) {
+	const formData = new FormData();
+	for (const [key, value] of Object.entries(fields)) {
+		formData.append(key, value);
+	}
+
+	formData.append("file", file);
+
+	const response = await fetch(url, {
+		method: "POST",
+		body: formData,
+	});
+
+	if (!response.ok) {
+		throw new Error(`Failed to upload file: ${response.statusText}`);
+	}
+
+	return response;
+}
+```
+
+3. **Process the KYC session** by calling the `process` endpoint:
+   - No authentication required for this step
+   - Can be safely called on the client side
+   - Triggers the verification process
+
+4. **Poll the KYC session status** until verification is complete:
+   - Status can be: `VERIFYING`, `COMPLETED`, or `FAILED`
+   - Continue polling while status is `VERIFYING`
+   - Handle completion or failure accordingly
+
+### Deposit Flow (Onramp)
+
+The fiat-to-crypto deposit process follows these steps:
+
+1. **Request a deposit quote**:
+   - Specify payment method (PIX for Brazil)
+   - Set amount to send in fiat currency
+   - Choose cryptocurrency to receive (USDC or BRZ)
+
+2. **Create a deposit session** with the quote:
+   - Provide wallet address to receive crypto
+   - Include tax ID for compliance
+   - Specify blockchain network (chainId)
+
+3. **Complete the deposit**:
+   - Receive PIX payment details (QR code and PIX key)
+   - User makes PIX payment to provided details
+   - Crypto is automatically sent to wallet upon payment confirmation
+
+### Withdrawal Flow (Offramp)
+
+The crypto-to-fiat withdrawal process involves smart wallet operations:
+
+1. **Request a withdrawal quote**:
+   - Specify amount to send in cryptocurrency
+   - Choose payment method to receive fiat (PIX, bank transfer, etc.)
+   - Set blockchain network details
+
+2. **Smart wallet setup**:
+   - Register or retrieve smart wallet for the user's EOA
+   - Uses account abstraction for better UX
+   - Factory address: `0xe77f2c7d79b2743d39ad73dc47a8e9c6416ad3f3`
+
+3. **Create withdrawal order**:
+   - Provide PIX key or bank details for receiving funds
+   - Include tax ID for compliance
+   - Generate userOp hash for signing
+
+```typescript
+// Using Viem's signMessage to sign the userOp hash
+// signMessage returns a signature string that can be used to execute the userOp
+const signature = await signMessage({
+  account: walletAddress, // EOA wallet address, can be a provider such as MetaMask
+  message: {
+    raw: userOperationHash,
+  }, 
+}); 
+```
+
+4. **Sign and execute the transaction**:
+   - User signs the userOp hash with their wallet
+   - Execute the signed transaction via Notus API
+   - Fiat funds are sent to specified payment method
 
 ## 🌍 Supported Features
 
