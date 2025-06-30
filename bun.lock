@@ -3,6 +3,9 @@
   "workspaces": {
     "": {
       "name": "notus-api-examples",
+      "dependencies": {
+        "expo-camera": "~16.1.9",
+      },
       "devDependencies": {
         "@biomejs/biome": "^1.9.4",
         "prettier": "^3.5.3",
@@ -41,6 +44,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@expo/vector-icons": "^14.1.0",
+        "@notus-api/expo-sdk": "link:@notus-api/expo-sdk",
         "@react-navigation/bottom-tabs": "^7.3.10",
         "@react-navigation/elements": "^2.3.8",
         "@react-navigation/native": "^7.1.6",
@@ -70,7 +74,7 @@
       "devDependencies": {
         "@babel/core": "^7.25.2",
         "@types/react": "~19.0.10",
-        "typescript": "catalog:",
+        "typescript": "^5.8.2",
       },
     },
     "examples/privy-nextjs-notus-api": {
@@ -657,6 +661,8 @@
     "@notus-api-examples/typescript-config": ["@notus-api-examples/typescript-config@workspace:packages/typescript-config"],
 
     "@notus-api-examples/ui": ["@notus-api-examples/ui@workspace:packages/ui"],
+
+    "@notus-api/expo-sdk": ["@notus-api/expo-sdk@link:@notus-api/expo-sdk", {}],
 
     "@paulmillr/qr": ["@paulmillr/qr@0.2.1", "", {}, "sha512-IHnV6A+zxU7XwmKFinmYjUcwlyK9+xkG3/s9KcQhI9BjQKycrJ1JRO+FbNYPwZiPKW3je/DR0k7w8/gLa5eaxQ=="],
 
@@ -1429,6 +1435,8 @@
     "expo-asset": ["expo-asset@11.1.5", "", { "dependencies": { "@expo/image-utils": "^0.7.4", "expo-constants": "~17.1.5" }, "peerDependencies": { "expo": "*", "react": "*", "react-native": "*" } }, "sha512-GEQDCqC25uDBoXHEnXeBuwpeXvI+3fRGvtzwwt0ZKKzWaN+TgeF8H7c76p3Zi4DfBMFDcduM0CmOvJX+yCCLUQ=="],
 
     "expo-blur": ["expo-blur@14.1.4", "", { "peerDependencies": { "expo": "*", "react": "*", "react-native": "*" } }, "sha512-55P9tK/RjJZEcu2tU7BqX3wmIOrGMOOkmHztJMMws+ZGHzvtjnPmT7dsQxhOU9vPj77oHnKetYHU2sik3iBcCw=="],
+
+    "expo-camera": ["expo-camera@16.1.9", "", { "dependencies": { "invariant": "^2.2.4" }, "peerDependencies": { "expo": "*", "react": "*", "react-native": "*", "react-native-web": "*" }, "optionalPeers": ["react-native-web"] }, "sha512-Aao0rNhhJxrWLx1moWZYBsRnEoZ04Vnm8uPO24V1161m5PLGptI7m5NS8NKoHx9McfrnDkvyJSWxz/7AhfEzTw=="],
 
     "expo-constants": ["expo-constants@17.1.6", "", { "dependencies": { "@expo/config": "~11.0.9", "@expo/env": "~1.0.5" }, "peerDependencies": { "expo": "*", "react-native": "*" } }, "sha512-q5mLvJiLtPcaZ7t2diSOlQ2AyxIO8YMVEJsEfI/ExkGj15JrflNQ7CALEW6IF/uNae/76qI/XcjEuuAyjdaCNw=="],
 
