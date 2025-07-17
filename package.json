@@ -1,36 +1,35 @@
 {
-  "name": "notus-api-examples",
-  "private": true,
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "prettier": "^3.5.3",
-    "turbo": "^2.5.3",
-    "typescript": "5.8.2"
-  },
-  "engines": {
-    "node": ">=18"
-  },
-  "workspaces": {
-    "packages": [
-      "examples/*",
-      "packages/*"
-    ],
-    "catalog": {
-      "typescript": "^5.8.3",
-      "react": "19.0.0",
-      "react-dom": "19.0.0",
-      "@types/react": "19.0.0",
-      "@types/react-dom": "19.0.0"
-    }
-  },
-  "dependencies": {
-    "expo-camera": "~16.1.9"
-  }
+	"name": "notus-api-examples",
+	"private": true,
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev",
+		"lint": "turbo run lint",
+		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+		"check-types": "turbo run check-types"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"prettier": "^3.5.3",
+		"turbo": "^2.5.3",
+		"typescript": "5.8.2"
+	},
+	"packageManager": "bun@1.2.18",
+	"engines": {
+		"node": ">=18"
+	},
+	"workspaces": {
+		"packages": ["examples/*", "packages/*"],
+		"catalog": {
+			"typescript": "^5.8.3",
+			"react": "19.0.0",
+			"react-dom": "19.0.0",
+			"@types/react": "19.0.0",
+			"@types/react-dom": "19.0.0",
+			"next": "15.3.2"
+		}
+	},
+	"dependencies": {
+		"expo-camera": "~16.1.9"
+	}
 }
