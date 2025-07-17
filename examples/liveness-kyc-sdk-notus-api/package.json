@@ -1,0 +1,26 @@
+{
+	"name": "liveness-kyc-sdk-notus-api",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev --turbopack",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"@notus-api-examples/ui": "workspace:*",
+		"@notus-api/react-sdk": "https://pkg.pr.new/notuslabs/notus-api/@notus-api/react-sdk@0dfc931",
+		"next": "catalog:",
+		"react": "catalog:",
+		"react-dom": "catalog:"
+	},
+	"devDependencies": {
+		"@tailwindcss/postcss": "^4",
+		"@types/node": "^20",
+		"@types/react": "^19",
+		"@types/react-dom": "^19",
+		"tailwindcss": "^4",
+		"typescript": "^5"
+	}
+}
