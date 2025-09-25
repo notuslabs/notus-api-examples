@@ -14,11 +14,10 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@notus-api-examples/ui/components/card";
-import { redirect } from "next/navigation";
 
 export default function LoginPage() {
 	const { initOAuth, loading } = useLoginWithOAuth();
-	const { ready, authenticated } = usePrivy();
+	const { ready } = usePrivy();
 
 	if (loading || !ready)
 		return (
@@ -26,10 +25,6 @@ export default function LoginPage() {
 				<div className="animate-pulse">Loading...</div>
 			</div>
 		);
-
-	if (authenticated) {
-		redirect("/");
-	}
 
 	return (
 		<div className="flex min-h-screen items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
