@@ -6,13 +6,19 @@ export async function auth() {
 	try {
 		const { get } = await cookies();
 
-		const token = get("privy-id-token");
-
+		const token = get("privy-token");
+		
 		if (!token) {
 			return null;
 		}
 
-		let user = await privy.getUser({ idToken: token.value });
+		const authToken = await privy.verifyAuthToken(token.value);
+
+		if (!authToken) {
+			return null;
+		}
+
+		let user = await privy.getUserById(authToken.userId);
 
 		if (!user.wallet?.address) {
 			user = await privy.createWallets({
