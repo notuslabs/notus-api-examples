@@ -12,13 +12,13 @@ export async function auth() {
 			return null;
 		}
 
-		let verifiedUser = await privy.verifyAuthToken(token.value);
+		const authToken = await privy.verifyAuthToken(token.value);
 
-		if (!verifiedUser) {
+		if (!authToken) {
 			return null;
 		}
 
-		let user = await privy.getUserById(verifiedUser.userId);
+		let user = await privy.getUserById(authToken.userId);
 
 		if (!user.wallet?.address) {
 			user = await privy.createWallets({
